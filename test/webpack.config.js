@@ -1,15 +1,21 @@
+const path = require('path')
 module.exports = {
 	context: __dirname,
 	entry: "./test.js",
+	output : {
+		filename: 'test/bundle.js',
+	},
 	module: {
-		loaders: [
+		rules: [
 			{
-				test: /test\.js$/,
-				loader: __dirname + "/../cacheable?brfs"
+				test: [require.resolve('./test')],
+				loader: __dirname + '/../index?brfs',
+				enforce: 'post',
 			},
 			{
-				test: /\.coffee$/,
-				loader: __dirname + "/../cacheable?coffeeify"
+				test: [require.resolve('./test.coffee')],
+				loader: __dirname + "/../index?coffeeify",
+				enforce: 'post',
 			}
 		]
 	}
